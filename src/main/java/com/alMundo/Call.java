@@ -1,13 +1,19 @@
 package com.alMundo;
 
+import com.alMundo.enums.CallStatusEnum;
+import com.alMundo.enums.ReasonStatusEnum;
+
 public class Call {
 	
 	private Integer id;
-	
 	private CallStatusEnum status;
-	
 	private ReasonStatusEnum reason;
 	
+	
+	public Call() {
+		this.status = CallStatusEnum.PENDING;
+	}
+
 	public Integer getId() {
 		return id;
 	}

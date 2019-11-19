@@ -1,4 +1,4 @@
-package com.alMundo;
+package com.alMundo.enums;
 
 public enum ReasonStatusEnum {
 	CLAIN,
