@@ -6,7 +6,10 @@ import com.alMundo.enums.ReasonStatusEnum;
 public class CallMain {
 
 	public static void main(String[] args) {
-		//Ver application proterties
+		/** Se resuelve Extras/Plus
+		 *	Ver application proterties
+		 * 11 llamadas -10 thread -1 empleado de cada tipo
+		 */
 		 Dispatcher dispatcher = new Dispatcher();
 		//Call
 		 Call call;
