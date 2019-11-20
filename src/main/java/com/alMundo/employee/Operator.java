@@ -19,7 +19,7 @@ public class Operator extends Employee  {
 
 	public void callHandler(Call call) {
 			LOGGER.debug("callHandler Operator");
-			long millis = EmployeeHelper.getRandomNumberInts(5,10)* 60000;
+			long millis = EmployeeHelper.getRandomNumberInts(5,10)* 1000;
 			try {
 				Thread.sleep(millis);
 			} catch (InterruptedException e) {

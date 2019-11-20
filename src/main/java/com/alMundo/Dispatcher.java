@@ -5,7 +5,6 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
@@ -24,29 +23,24 @@ public class Dispatcher {
 	private BlockingQueue<Call> pendingCalls;
 	private List<Call>	 calls;
 	
-	
-	
-	public Dispatcher(Configuration config){
+	/**
+	 * Constructor para poder usar Mockito
+	 * @param config
+	 * @param executorService
+	 */
+	public Dispatcher(Configuration config,ExecutorService executorService){
 		this.employeeHelper = new EmployeeHelper(config);
 		this.pendingCalls = new LinkedBlockingDeque<Call>();
-		
-		this.executor = Executors.newFixedThreadPool(config.getThread(),new ThreadFactory() {
-			public Thread newThread(Runnable r) {
-				Thread t = Executors.defaultThreadFactory().newThread(r);
-				t.setDaemon(false);
-				return t;
-			}
-		});
+		this.executor = executorService;
 	}
-
-	public void dispatchCalls(List<Call> calls){
-		this.setCalls(calls);
-		
-		for (Call call : calls) {
-			this.dispatchCall(call);
-		}
 	
+	public Dispatcher(){
+		Configuration config =  new Configuration();
+		this.employeeHelper = new EmployeeHelper(config);
+		this.pendingCalls = new LinkedBlockingDeque<Call>();
+		this.executor =  Executors.newFixedThreadPool(config.getThread());
 	}
+	
 	
 	public void dispatchCall(Call call){
 		Employee employee = this.employeeHelper.getNextEmploye();
@@ -64,7 +58,9 @@ public class Dispatcher {
 		if (this.pendingCalls.isEmpty()){
 			try {
 				this.executor.shutdown();
-				executor.awaitTermination(5, TimeUnit.SECONDS);
+				//Peor caso que el ultimo thread que esta ejecutando 
+				//no termine su tarea
+				executor.awaitTermination(10, TimeUnit.SECONDS);
 			} catch (Exception e) {
 				LOG.info("tasks interrupted");
 			} finally {
@@ -77,7 +73,19 @@ public class Dispatcher {
 		Call call = (Call)this.pendingCalls.remove();
 		this.dispatchCall(call);
 	}
-	
+	/**
+	 * Para ejecutar una lista de llamadas
+	 * @param call
+	 */
+//	public void dispatchCalls(List<Call> calls){
+//		this.setCalls(calls);
+//		
+//		for (Call call : calls) {
+//			this.dispatchCall(call);
+//		}
+//	
+//	}
+
 	public List<Call> getCalls() {
 		return calls;
 	}

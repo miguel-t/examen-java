@@ -9,9 +9,14 @@ public class Call {
 	private CallStatusEnum status;
 	private ReasonStatusEnum reason;
 	
-	
 	public Call() {
 		this.status = CallStatusEnum.PENDING;
+	}
+
+	public Call(Integer id, CallStatusEnum status, ReasonStatusEnum reason) {
+		this.id = id;
+		this.status = status;
+		this.reason = reason;
 	}
 
 	public Integer getId() {

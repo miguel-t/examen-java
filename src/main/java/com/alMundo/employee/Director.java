@@ -21,11 +21,11 @@ public class Director extends Employee {
 
 	public void callHandler(Call call) {
 		LOGGER.debug("callHandler Director");
-		long millis = EmployeeHelper.getRandomNumberInts(5,10)* 60000;
+		long millis = EmployeeHelper.getRandomNumberInts(5,10)* 1000;
 		try {
 			Thread.sleep(millis);
 		} catch (InterruptedException e) {
-			LOGGER.info("Thread Interrup {}",e);
+			LOGGER.info("Director sleep {}",e);
 		}
 		//Change status
 		call.setStatus(CallStatusEnum.PROCESS);
