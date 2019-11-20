@@ -26,7 +26,7 @@ import com.alMundo.helper.Configuration;
 
 import junit.framework.TestCase;
 
-public class DispatcherTest extends TestCase {
+public class DispatcherTest extends TestCase{
 
 	private static final Logger LOG=  LoggerFactory.getLogger(DispatcherTest.class);
 	
@@ -58,17 +58,13 @@ public class DispatcherTest extends TestCase {
 		dispatcher = new Dispatcher(config, this.executorServiceMock);
 		dispatcher.dispatchCall(call);
 		
-	    // Let's call the callback. ArgumentCaptor.capture() works like a matcher.
+	    // Si no se envia a ejecutar una tarea lanza una excepcion 
 		Mockito.verify(executorServiceMock, new Times(1)).submit(runnableArgumentCaptor.capture());
 		
 		//Despues de ejecutar la tarea
-	
-		//Moc
-//		verify(executorService, new Times(1)).su(
-//			        dummyCallbackArgumentCaptor.capture());
-
 		//assertEquals("Call 1 atendida", true, call.getStatus() ==CallStatusEnum.PROCESS);
 	}
+	
 	/**
 	 * 10 llamadas , 5 operadores, 3 director y 1 supervisor
 	 * @throws Exception
@@ -80,16 +76,13 @@ public class DispatcherTest extends TestCase {
 		dispatcher = new Dispatcher(config, this.executorServiceMock);
 		//Call
 		Call call;
-		
 		listCall = new ArrayList<Call>();
 		for (int i = 0; i < 10 ; i++) {
 			dispatcher.dispatchCall(new Call(i,CallStatusEnum.PENDING,ReasonStatusEnum.SERVICE));
 		
 		}
-	    // Let's call the callback. ArgumentCaptor.capture() works like a matcher.
+	    // Verifico la cantidad de veces que se envia a ejecutar las tareas
 		Mockito.verify(executorServiceMock, new Times(10)).submit(runnableArgumentCaptor.capture());
-		
-		//assertEquals("Call 1 atendida", true, call.getStatus() ==CallStatusEnum.PROCESS);
 	}
 	
 }
