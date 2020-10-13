@@ -6,7 +6,7 @@
   <description>examen-java</description>
   
  	<properties>
-		<junit.version>4.11</junit.version>
+		<junit.version>4.13.1</junit.version>
 		<logback.version>1.1.2</logback.version>
 		<slf4j-api.version>1.7.7</slf4j-api.version>
 	    <maven.compiler.source>1.8</maven.compiler.source>
